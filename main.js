@@ -165,7 +165,7 @@ RigidBody.allInstances = [];
 var c = document.getElementById("render");
 var mouseDown;
 var cRect = c.getBoundingClientRect();
-c.addEventListener("mousedown", function(e) { 
+c.addEventListener("click", function(e) { 
     var cX = Math.round(e.clientX/cRect.width * 1000);
     var cY = Math.round(e.clientY/cRect.height * 1000);
     mouseDown = [cX, cY];
