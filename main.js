@@ -1,6 +1,3 @@
-// get screen dimensions
-var screen = { width: window.innerWidth, height: window.innerHeight };
-
 function dot(ctx, x, y) {
     ctx.beginPath();
     ctx.arc(x, y, 3, 0, 2 * Math.PI, false);
@@ -58,7 +55,7 @@ function physics(render) {
         }
     });
     //mouse
-    if (mouseDown != false) {
+    if (mouseDown != false && mouseEnabled == true) {
         RigidBody.allInstances.forEach( obj => {
             var vx = mouseDown[0] - obj.pos[0];
             var vy = mouseDown[1] - obj.pos[1];
@@ -166,12 +163,23 @@ class RigidBody {
 }
 RigidBody.allInstances = [];
 var c = document.getElementById("render");
+//var setSize = setInterval(() => {
+//    var can = document.getElementById("render");
+c.width = window.innerWidth;
+c.height = window.innerHeight;
+//}, 1000);
 var mouseDown;
+var mouseEnabled = true;
 var cRect = c.getBoundingClientRect();
 c.addEventListener("click", function(e) { 
     var cX = Math.round(e.clientX/cRect.width * window.innerWidth);
     var cY = Math.round(e.clientY/cRect.height * window.innerHeight);
     mouseDown = [cX, cY];
+    var can = document.getElementById("render");
+    if (can.height != window.innerHeight && can.width != window.innerWidth) {
+        can.width = window.innerWidth;
+        can.height = window.innerHeight;
+    }
 });
 c.addEventListener("mouseup", function(e) { 
     mouseDown = false;

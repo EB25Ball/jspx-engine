@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
-    <title>Document</title>
+    <title>jspx-engine</title>
 </head>
 <body>
-    <canvas id="render" width="1000" height="1000"></canvas>
+    <canvas id="render"></canvas>
+    <div id='mouseOff' onclick='mouseEnabled = false'>OFF</div>
     <script type="text/javascript" src="main.js"></script>
 </body>
 </html>
