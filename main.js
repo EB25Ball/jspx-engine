@@ -1,3 +1,6 @@
+// get screen dimensions
+var screen = { width: window.innerWidth, height: window.innerHeight };
+
 function dot(ctx, x, y) {
     ctx.beginPath();
     ctx.arc(x, y, 3, 0, 2 * Math.PI, false);
@@ -27,7 +30,7 @@ function rect(ctx, x, y, w, h) {
 }
 */
 function physics(render) {
-    render.ctx.clearRect(0, 0, 1000, 1000);
+    render.ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
     // gravity
     RigidBody.allInstances.forEach(obj => {
         obj.velocity[1] += render.gravity;
@@ -36,13 +39,13 @@ function physics(render) {
     RigidBody.allInstances.forEach(obj => {
         obj.pos[0] += obj.velocity[0];
         obj.pos[1] += obj.velocity[1];
-        if (obj.pos[1] > 1000 - obj.rad) {
-            obj.pos[1] = 1000 - obj.rad;
+        if (obj.pos[1] > window.innerHeight - obj.rad) {
+            obj.pos[1] = window.innerHeight - obj.rad;
             obj.velocity[0] = obj.velocity[0] * .9995;
             obj.velocity[1] = -obj.velocity[1] * 0.6 * (1 - 10/obj.mass);
         }
-        if (obj.pos[0] > 1000 - obj.rad) {
-            obj.pos[0] = 1000 - obj.rad;
+        if (obj.pos[0] > window.innerWidth - obj.rad) {
+            obj.pos[0] = window.innerWidth - obj.rad;
             obj.velocity[0] = -obj.velocity[0] * 0.6 * (1 - 10/obj.mass);
         }
         if (obj.pos[0] < obj.rad) {
@@ -166,35 +169,35 @@ var c = document.getElementById("render");
 var mouseDown;
 var cRect = c.getBoundingClientRect();
 c.addEventListener("click", function(e) { 
-    var cX = Math.round(e.clientX/cRect.width * 1000);
-    var cY = Math.round(e.clientY/cRect.height * 1000);
+    var cX = Math.round(e.clientX/cRect.width * window.innerWidth);
+    var cY = Math.round(e.clientY/cRect.height * window.innerHeight);
     mouseDown = [cX, cY];
 });
 c.addEventListener("mouseup", function(e) { 
     mouseDown = false;
 });
 var ctx = c.getContext("2d");
-const world = new Render(ctx, 1000, 1000, .98);
+const world = new Render(ctx, window.innerWidth, window.innerheight, .98);
 
-var circle1 = new RigidBody(world, 'circle', Math.floor(Math.random() * 899)+100, Math.floor(Math.random() * 899)+100, Math.floor(Math.random() * 20)+5, [2, -1], 200);
-var circle2 = new RigidBody(world, 'circle', Math.floor(Math.random() * 899)+100, Math.floor(Math.random() * 899)+100, Math.floor(Math.random() * 20)+5, [1, -1], 5000);
-var circle3 = new RigidBody(world, 'circle', Math.floor(Math.random() * 899)+100, Math.floor(Math.random() * 899)+100, Math.floor(Math.random() * 20)+5, [0, -1], 100);
-var circle4 = new RigidBody(world, 'circle', Math.floor(Math.random() * 899)+100, Math.floor(Math.random() * 899)+100, Math.floor(Math.random() * 20)+5, [-1, -1], 50);
-var circle5 = new RigidBody(world, 'circle', Math.floor(Math.random() * 899)+100, Math.floor(Math.random() * 899)+100, Math.floor(Math.random() * 20)+5, [-2, -1], 20);
-var circle6 = new RigidBody(world, 'circle', Math.floor(Math.random() * 899)+100, Math.floor(Math.random() * 899)+100, Math.floor(Math.random() * 20)+5, [2, -1], 200);
-var circle7 = new RigidBody(world, 'circle', Math.floor(Math.random() * 899)+100, Math.floor(Math.random() * 899)+100, Math.floor(Math.random() * 20)+5, [1, -1], 5000);
-var circle8 = new RigidBody(world, 'circle', Math.floor(Math.random() * 899)+100, Math.floor(Math.random() * 899)+100, Math.floor(Math.random() * 20)+20, [0, -1], 100);
-var circle9 = new RigidBody(world, 'circle', Math.floor(Math.random() * 899)+100, Math.floor(Math.random() * 899)+100, Math.floor(Math.random() * 20)+20, [-1, -1], 50);
-var circle10 = new RigidBody(world, 'circle', Math.floor(Math.random() * 899)+100, Math.floor(Math.random() * 899)+100, Math.floor(Math.random() * 20)+20, [-2, -1], 20);
-var circle11 = new RigidBody(world, 'circle', Math.floor(Math.random() * 899)+100, Math.floor(Math.random() * 899)+100, Math.floor(Math.random() * 20)+20, [2, -1], 200);
-var circle12 = new RigidBody(world, 'circle', Math.floor(Math.random() * 899)+100, Math.floor(Math.random() * 899)+100, Math.floor(Math.random() * 20)+20, [1, -1], 5000);
-var circle13 = new RigidBody(world, 'circle', Math.floor(Math.random() * 899)+100, Math.floor(Math.random() * 899)+100, Math.floor(Math.random() * 20)+20, [0, -1], 100);
-var circle14 = new RigidBody(world, 'circle', Math.floor(Math.random() * 899)+100, Math.floor(Math.random() * 899)+100, Math.floor(Math.random() * 20)+20, [-1, -1], 50);
-var circle15 = new RigidBody(world, 'circle', Math.floor(Math.random() * 899)+100, Math.floor(Math.random() * 899)+100, Math.floor(Math.random() * 20)+20, [-2, -1], 20);
-var circle16 = new RigidBody(world, 'circle', Math.floor(Math.random() * 899)+100, Math.floor(Math.random() * 899)+100, Math.floor(Math.random() * 20)+20, [2, -1], 200);
-var circle17 = new RigidBody(world, 'circle', Math.floor(Math.random() * 899)+100, Math.floor(Math.random() * 899)+100, Math.floor(Math.random() * 20)+20, [1, -1], 5000);
-var circle18 = new RigidBody(world, 'circle', Math.floor(Math.random() * 899)+100, Math.floor(Math.random() * 899)+100, Math.floor(Math.random() * 20)+20, [0, -1], 100);
-var circle19 = new RigidBody(world, 'circle', Math.floor(Math.random() * 899)+100, Math.floor(Math.random() * 899)+100, Math.floor(Math.random() * 20)+20, [-1, -1], 50);
-var circle20 = new RigidBody(world, 'circle', Math.floor(Math.random() * 899)+100, Math.floor(Math.random() * 899)+100, Math.floor(Math.random() * 20)+20, [-2, -1], 20);
+var circle1 = new RigidBody(world, 'circle', Math.floor(Math.random() * (window.innerWidth - 200))+100, Math.floor(Math.random() * (window.innerHeight - 200))+100, Math.floor(Math.random() * 20)+5, [2, -1], 200);
+var circle2 = new RigidBody(world, 'circle', Math.floor(Math.random() * (window.innerWidth - 200))+100, Math.floor(Math.random() * (window.innerHeight - 200))+100, Math.floor(Math.random() * 20)+5, [1, -1], 5000);
+var circle3 = new RigidBody(world, 'circle', Math.floor(Math.random() * (window.innerWidth - 200))+100, Math.floor(Math.random() * (window.innerHeight - 200))+100, Math.floor(Math.random() * 20)+5, [0, -1], 100);
+var circle4 = new RigidBody(world, 'circle', Math.floor(Math.random() * (window.innerWidth - 200))+100, Math.floor(Math.random() * (window.innerHeight - 200))+100, Math.floor(Math.random() * 20)+5, [-1, -1], 50);
+var circle5 = new RigidBody(world, 'circle', Math.floor(Math.random() * (window.innerWidth - 200))+100, Math.floor(Math.random() * (window.innerHeight - 200))+100, Math.floor(Math.random() * 20)+5, [-2, -1], 20);
+var circle6 = new RigidBody(world, 'circle', Math.floor(Math.random() * (window.innerWidth - 200))+100, Math.floor(Math.random() * (window.innerHeight - 200))+100, Math.floor(Math.random() * 20)+5, [2, -1], 200);
+var circle7 = new RigidBody(world, 'circle', Math.floor(Math.random() * (window.innerWidth - 200))+100, Math.floor(Math.random() * (window.innerHeight - 200))+100, Math.floor(Math.random() * 20)+5, [1, -1], 5000);
+var circle8 = new RigidBody(world, 'circle', Math.floor(Math.random() * (window.innerWidth - 200))+100, Math.floor(Math.random() * (window.innerHeight - 200))+100, Math.floor(Math.random() * 20)+20, [0, -1], 100);
+var circle9 = new RigidBody(world, 'circle', Math.floor(Math.random() * (window.innerWidth - 200))+100, Math.floor(Math.random() * (window.innerHeight - 200))+100, Math.floor(Math.random() * 20)+20, [-1, -1], 50);
+var circle10 = new RigidBody(world, 'circle', Math.floor(Math.random() * (window.innerWidth - 200))+100, Math.floor(Math.random() * (window.innerHeight - 200))+100, Math.floor(Math.random() * 20)+20, [-2, -1], 20);
+var circle11 = new RigidBody(world, 'circle', Math.floor(Math.random() * (window.innerWidth - 200))+100, Math.floor(Math.random() * (window.innerHeight - 200))+100, Math.floor(Math.random() * 20)+20, [2, -1], 200);
+var circle12 = new RigidBody(world, 'circle', Math.floor(Math.random() * (window.innerWidth - 200))+100, Math.floor(Math.random() * (window.innerHeight - 200))+100, Math.floor(Math.random() * 20)+20, [1, -1], 5000);
+var circle13 = new RigidBody(world, 'circle', Math.floor(Math.random() * (window.innerWidth - 200))+100, Math.floor(Math.random() * (window.innerHeight - 200))+100, Math.floor(Math.random() * 20)+20, [0, -1], 100);
+var circle14 = new RigidBody(world, 'circle', Math.floor(Math.random() * (window.innerWidth - 200))+100, Math.floor(Math.random() * (window.innerHeight - 200))+100, Math.floor(Math.random() * 20)+20, [-1, -1], 50);
+var circle15 = new RigidBody(world, 'circle', Math.floor(Math.random() * (window.innerWidth - 200))+100, Math.floor(Math.random() * (window.innerHeight - 200))+100, Math.floor(Math.random() * 20)+20, [-2, -1], 20);
+var circle16 = new RigidBody(world, 'circle', Math.floor(Math.random() * (window.innerWidth - 200))+100, Math.floor(Math.random() * (window.innerHeight - 200))+100, Math.floor(Math.random() * 20)+20, [2, -1], 200);
+var circle17 = new RigidBody(world, 'circle', Math.floor(Math.random() * (window.innerWidth - 200))+100, Math.floor(Math.random() * (window.innerHeight - 200))+100, Math.floor(Math.random() * 20)+20, [1, -1], 5000);
+var circle18 = new RigidBody(world, 'circle', Math.floor(Math.random() * (window.innerWidth - 200))+100, Math.floor(Math.random() * (window.innerHeight - 200))+100, Math.floor(Math.random() * 20)+20, [0, -1], 100);
+var circle19 = new RigidBody(world, 'circle', Math.floor(Math.random() * (window.innerWidth - 200))+100, Math.floor(Math.random() * (window.innerHeight - 200))+100, Math.floor(Math.random() * 20)+20, [-1, -1], 50);
+var circle20 = new RigidBody(world, 'circle', Math.floor(Math.random() * (window.innerWidth - 200))+100, Math.floor(Math.random() * (window.innerHeight - 200))+100, Math.floor(Math.random() * 20)+20, [-2, -1], 20);
 
 world.render();
