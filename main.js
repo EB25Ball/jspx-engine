@@ -26,6 +26,15 @@ function rect(ctx, x, y, w, h) {
     dot(ctx, x+w, y+h);
 }
 */
+function gravityPlus() {
+    world.gravity = world.gravity + .98/100;
+    console.log('g+');
+}
+function gravityMinus() {
+    world.gravity = world.gravity - .98/100;
+    console.log('g-');
+}
+
 function physics(render) {
     render.ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
     // gravity
@@ -59,8 +68,8 @@ function physics(render) {
         RigidBody.allInstances.forEach( obj => {
             var vx = mouseDown[0] - obj.pos[0];
             var vy = mouseDown[1] - obj.pos[1];
-            obj.velocity[0] += vx/2000;
-            obj.velocity[1] += vy/2000;
+            obj.velocity[0] += vx/3000;
+            obj.velocity[1] += vy/3000;
         });
     }
     //collision
@@ -117,8 +126,8 @@ class Render {
     }
     circle(ctx, x, y, r, m) {
         ctx.beginPath();
-        ctx.strokeStyle = 'rgb(' + (255*(m/10000)) + ', 0, 0)';
-        ctx.fillStyle = 'rgb(' + (255*(m/10000)) + ', 0, 0)';
+        ctx.strokeStyle = 'rgb(' + (255*(m/1000)) + ', 0, 0)';
+        ctx.fillStyle = 'rgb(' + (255*(m/1000)) + ', 0, 0)';
         ctx.arc(x, y, r, 0, 2 * Math.PI, false);
         ctx.fill();//stroke/fill
         //for (var i = 0; i < 2 * Math.PI; i = i + Math.PI/6) {
@@ -194,6 +203,7 @@ c.addEventListener("click", function(e) {
         if (obj.type == 'circle') {
             if (Math.hypot(cX - obj.pos[0], cY - obj.pos[1]) < obj.rad) {
                 obj.mass = obj.mass+100;
+                obj.rad = obj.rad+5
             }
         }
     });
@@ -201,6 +211,11 @@ c.addEventListener("click", function(e) {
 c.addEventListener("mouseup", function(e) { 
     mouseDown = false;
 });
+
+function addObject() {
+    var obj = new RigidBody(world, 'circle', Math.floor(Math.random() * (window.innerWidth - 200))+100, Math.floor(Math.random() * (window.innerHeight - 200))+100, Math.floor(Math.random() * 20)+5, [2, -1], 200);
+}
+
 var ctx = c.getContext("2d");
 const world = new Render(ctx, window.innerWidth, window.innerHeight, .98);
 

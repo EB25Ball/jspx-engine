@@ -8,7 +8,12 @@
 </head>
 <body>
     <canvas id="render"></canvas>
-    <div id='mouseOff' onclick='mouseToggle()'>TOGGLE</div>
+    <div class="menu">
+        <div id='gravityToggle' onclick='mouseToggle()'>TOGGLE</div>
+        <div id="start">START</div>
+        <div id="add" onclick='addObject()'>ADD</div>
+        <div class="gravity"><span id='gplus' onclick='gravityPlus()'>+</span>GRAVITY<span id='gminus' onclick='gravityMinus()'>-</span></div>
+    </div>
     <script type="text/javascript" src="main.js"></script>
 </body>
 </html>
