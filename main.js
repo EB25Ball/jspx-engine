@@ -37,6 +37,7 @@ function gravityMinus() {
 
 function physics(render) {
     render.ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+    document.querySelector('#count').innerText = RigidBody.allInstances.length;
     // gravity
     RigidBody.allInstances.forEach(obj => {
         obj.velocity[1] += render.gravity;
@@ -121,7 +122,7 @@ class Render {
     render() {
         var run = setInterval(() => {physics(this)}, .10);
     }
-    freeze() {
+    pause() {
         clearInterval(run);
     }
     circle(ctx, x, y, r, m) {
@@ -213,7 +214,17 @@ c.addEventListener("mouseup", function(e) {
 });
 
 function addObject() {
-    var obj = new RigidBody(world, 'circle', Math.floor(Math.random() * (window.innerWidth - 200))+100, Math.floor(Math.random() * (window.innerHeight - 200))+100, Math.floor(Math.random() * 20)+5, [2, -1], 200);
+    var obj = new RigidBody(world, 'circle', Math.floor(Math.random() * (window.innerWidth - 200))+100, Math.floor(Math.random() * (window.innerHeight - 200))+100, Math.floor(Math.random() * 20)+5, [2, -1], Math.floor(Math.random() * 1000));
+}
+
+function freeze() {
+    RigidBody.allInstances.forEach( obj => {
+        obj.velocity = [0, 0];
+    });
+}
+
+function clearAll() {
+    RigidBody.allInstances = [];
 }
 
 var ctx = c.getContext("2d");
