@@ -8,7 +8,7 @@
 </head>
 <body>
     <canvas id="render"></canvas>
-    <div id='mouseOff' onclick='mouseEnabled = false'>OFF</div>
+    <div id='mouseOff' onclick='mouseToggle()'>TOGGLE</div>
     <script type="text/javascript" src="main.js"></script>
 </body>
 </html>

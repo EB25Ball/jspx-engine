@@ -95,7 +95,7 @@ function physics(render) {
     //draw
     RigidBody.allInstances.forEach( obj => {
         if (obj.type == 'circle') {
-            render.circle(render.ctx, obj.pos[0], obj.pos[1], obj.rad);
+            render.circle(render.ctx, obj.pos[0], obj.pos[1], obj.rad, obj.mass);
         } else if (obj.type == 'square') {
             render.rect(render.ctx, obj.pos[0], obj.pos[1], obj.width, obj.height);
         }
@@ -115,8 +115,10 @@ class Render {
     freeze() {
         clearInterval(run);
     }
-    circle(ctx, x, y, r) {
+    circle(ctx, x, y, r, m) {
         ctx.beginPath();
+        ctx.strokeStyle = 'rgb(' + (255*(m/10000)) + ', 0, 0)';
+        ctx.fillStyle = 'rgb(' + (255*(m/10000)) + ', 0, 0)';
         ctx.arc(x, y, r, 0, 2 * Math.PI, false);
         ctx.fill();//stroke/fill
         //for (var i = 0; i < 2 * Math.PI; i = i + Math.PI/6) {
@@ -168,6 +170,14 @@ var c = document.getElementById("render");
 c.width = window.innerWidth;
 c.height = window.innerHeight;
 //}, 1000);
+function mouseToggle() {
+    if (mouseEnabled == false){
+        mouseEnabled = true;
+    } else {
+        mouseEnabled = false;
+    }
+}
+
 var mouseDown;
 var mouseEnabled = true;
 var cRect = c.getBoundingClientRect();
@@ -180,12 +190,19 @@ c.addEventListener("click", function(e) {
         can.width = window.innerWidth;
         can.height = window.innerHeight;
     }
+    RigidBody.allInstances.forEach(obj => {
+        if (obj.type == 'circle') {
+            if (Math.hypot(cX - obj.pos[0], cY - obj.pos[1]) < obj.rad) {
+                obj.mass = obj.mass+100;
+            }
+        }
+    });
 });
 c.addEventListener("mouseup", function(e) { 
     mouseDown = false;
 });
 var ctx = c.getContext("2d");
-const world = new Render(ctx, window.innerWidth, window.innerheight, .98);
+const world = new Render(ctx, window.innerWidth, window.innerHeight, .98);
 
 var circle1 = new RigidBody(world, 'circle', Math.floor(Math.random() * (window.innerWidth - 200))+100, Math.floor(Math.random() * (window.innerHeight - 200))+100, Math.floor(Math.random() * 20)+5, [2, -1], 200);
 var circle2 = new RigidBody(world, 'circle', Math.floor(Math.random() * (window.innerWidth - 200))+100, Math.floor(Math.random() * (window.innerHeight - 200))+100, Math.floor(Math.random() * 20)+5, [1, -1], 5000);
