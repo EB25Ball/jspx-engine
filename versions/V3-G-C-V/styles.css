@@ -1,0 +1,46 @@
+body{
+    margin: 0;
+    display: grid;
+    place-content: center;
+} 
+#render{
+    width: 100%;
+    height: 100%;
+}
+.menu{
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: #B1B5BA;
+    z-index: 100;
+    padding: .5rem;
+    border-bottom-left-radius: .5rem;
+    border-bottom-right-radius: .5rem;
+    gap: .5rem;
+    pointer-events: none;
+    user-select: none;
+}
+.menu div{
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    color: #1E1E1E;
+    padding: .5rem;
+    background-color: #FFFFFF;
+    border-radius: .5rem;
+    cursor: pointer;
+    pointer-events: all;
+}
+#gplus{
+    padding-right: .5rem;
+}
+#gminus{
+    padding-left: .5rem;
+}
+
+#start{
+    pointer-events: none;
+}

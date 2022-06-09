@@ -3,20 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
+    <style type="text/css">
+        body{
+            margin: 0;
+            display: grid;
+            place-content: center;
+        } 
+        .constainer{
+            width: 100%;
+            height: 100%;
+        }
+        ul{
+            margin-inline: auto;
+        }
+    </style>
     <title>jspx-engine</title>
 </head>
 <body>
-    <canvas id="render"></canvas>
-    <div class="menu">
-        <div id="count"></div>
-        <div id='gravityToggle' onclick='mouseToggle()'>TOGGLE</div>
-        <div id="start">START</div>
-        <div id="add" onclick='addObject()'>ADD</div>
-        <div class="clear" onclick='clearAll()'>CLEAR</div>
-        <div id="freeze" onclick='freeze()'>FREEZE</div>
-        <div class="gravity"><span id='gplus' onclick='gravityPlus()'>+</span>GRAVITY<span id='gminus' onclick='gravityMinus()'>-</span></div>
+    <div class="container">
+        <ul>
+            <?php
+                $dir = 'versions/';
+                echo scandir($dir);
+            ?>
+        </ul>
     </div>
-    <script type="text/javascript" src="main.js"></script>
 </body>
 </html>
