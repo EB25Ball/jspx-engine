@@ -24,7 +24,7 @@
         <ul>
             <?php
                 $dir = 'versions/';
-                echo scandir($dir);
+                print_r(scandir($dir));
             ?>
         </ul>
     </div>
