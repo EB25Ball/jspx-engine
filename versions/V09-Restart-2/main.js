@@ -7,6 +7,33 @@ function addObject(x=Math.floor(Math.random() * (window.innerWidth - 200))+100, 
     var obj = new Circle([x, y], Math.floor(Math.random() * 20)+5, v, m);
 }
 
+function poof() {
+    Circle.allInstances.forEach( obj => {
+        Circle.allInstances.forEach( col => {
+            var hypot = Math.hypot(col.pos[0] - obj.pos[0], col.pos[1] - obj.pos[1]);
+            if (col.pos[1] > obj.pos[1]) {
+                var vx = col.pos[0] - obj.pos[0];
+                var vy = col.pos[1] - obj.pos[1];
+                col.vel[0] += vx/10;
+                col.vel[1] += vy/2000;
+                obj.vel[0] += -vx/10;
+                obj.vel[1] += -vy/10;
+            } else if (col.pos[1] < obj.pos[1]) {
+                var vx = obj.pos[0] - col.pos[0];
+                var vy = obj.pos[1] - col.pos[1];
+                obj.vel[0] += vx/10;
+                obj.vel[1] += vy/2000;
+                col.vel[0] += -vx/10;
+                col.vel[1] += -vy/10;
+            } else {
+                var vx = col.pos[0] - obj.pos[0];
+                col.vel[0] += vx/100;
+                obj.vel[0] += -vx/100;
+            }
+        });
+    });
+}
+
 // physics
 function physics(render) {
     render.ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
@@ -51,7 +78,11 @@ function physics(render) {
                 var a = obj.rad;
                 var b = - m * (u - a) + v;
                 // set new pos
-                obj.pos[0] = ((obj.pos[1] - b) / - m) + a;
+                if (m == 0) {
+                    obj.pos[0] = a - (obj.pos[0] - a);
+                } else {
+                    obj.pos[0] = ((obj.pos[1] - b) / - m) + a;
+                }
                 obj.vel[1] *= .9995;
                 obj.vel[0] = -obj.vel[0] * 0.6 * (1 - 10/obj.mass);
             }
@@ -68,7 +99,11 @@ function physics(render) {
                 var a = window.innerWidth - obj.rad;
                 var b = - m * (u - a) + v;
                 // set new pos
-                obj.pos[0] = ((obj.pos[1] - b) / - m) + a;
+                if (m == 0) {
+                    obj.pos[0] = a - (obj.pos[0] - a);
+                } else {
+                    obj.pos[0] = ((obj.pos[1] - b) / - m) + a;
+                }
                 obj.vel[1] *= .9995;
                 obj.vel[0] = -obj.vel[0] * 0.6 * (1 - 10/obj.mass);
             }
@@ -85,7 +120,11 @@ function physics(render) {
                 var a = obj.rad;
                 var b = - m * (u - a) + v;
                 // set new pos
-                obj.pos[1] = ((obj.pos[0] - b) / - m) + a;
+                if (m == 0) {
+                    obj.pos[1] = a - (obj.pos[1] - a);
+                } else {
+                    obj.pos[1] = ((obj.pos[0] - b) / - m) + a;
+                }
                 obj.vel[0] *= .9995;
                 obj.vel[1] = -obj.vel[1] * 0.6 * (1 - 10/obj.mass);
             }
@@ -102,7 +141,11 @@ function physics(render) {
                 var a = window.innerHeight - obj.rad;
                 var b = - m * (u - a) + v;
                 // set new pos
-                obj.pos[1] = ((obj.pos[0] - b) / - m) + a;
+                if (m == 0) {
+                    obj.pos[1] = a - (obj.pos[1] - a);
+                } else {
+                    obj.pos[1] = ((obj.pos[0] - b) / - m) + a;
+                }
                 obj.vel[0] *= .9995;
                 obj.vel[1] = -obj.vel[1] * 0.6 * (1 - 10/obj.mass);
             }
@@ -159,7 +202,7 @@ c.addEventListener("click", function(e) {
     var cX = Math.round(e.clientX/c.getBoundingClientRect().width * window.innerWidth);
     var cY = Math.round(e.clientY/c.getBoundingClientRect().height * window.innerHeight);
     mouseCoords = [cX, cY];
-    addObject(mouseCoords[0], mouseCoords[1], /**/[1, 1]/*[2 - Math.floor(Math.random() * 4), 2 - Math.floor(Math.random() * 4)]/**/, (Circle.allInstances.length + 1) * 10);
+    addObject(mouseCoords[0], mouseCoords[1], /*[1, 1]/**/[2 - Math.floor(Math.random() * 4), 2 - Math.floor(Math.random() * 4)]/**/, (Circle.allInstances.length + 1) * 10);
 });
 
 const world = new Render(ctx, window.innerWidth, window.innerHeight, 9.8);

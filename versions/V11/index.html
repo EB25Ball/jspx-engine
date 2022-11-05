@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>jspx-engine</title>
+</head>
+<body>
+    <div class="menu">
+        <div class="start" onclick="world.render()">
+            <p>
+                Start
+            </p>
+        </div>
+        <div class="stop" onclick="world.pause()">
+            <p>
+                Stop
+            </p>
+        </div>
+        <div class="step" onclick="world.step()">
+            <p>
+                Step
+            </p>
+        </div>
+        <div class="gravity-up" onclick="world.gravity += 9.8/100">
+            <p>
+                Gravity Up
+            </p>
+        </div>
+        <div class="gravity-down" onclick="world.gravity -= 9.8/100">
+            <p>
+                Gravity Down
+            </p>
+        </div>
+        <div class="gravity-up" onclick="world.gravity -= 9.8/100 * 3;demo();world.gravity += 9.8/100 * 3">
+            <p>
+                GPoof
+            </p>
+        </div>
+        <div class="poof" onclick="poof()">
+            <p>
+                Poof
+            </p>
+        </div>
+    </div>
+    <canvas id="render"></canvas>
+    <script type="text/javascript" src="main.js"></script>
+</body>
+</html>

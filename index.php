@@ -26,7 +26,7 @@
                 $dir = 'versions/';
                 $arr = scandir($dir);
                 for ($i = 2; $i < count($arr); $i++) {
-                    echo '<li><a href="versions/'.$arr[$i].'">'.substr($arr[$i], 0, 2).'</a></li>';
+                    echo '<li><a href="versions/'.$arr[$i].'">'.substr($arr[$i], 0, 3).'</a></li>';
                 }
             ?>
         </ul>
